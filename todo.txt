@@ -1,5 +1,9 @@
-#connection to firebase, back and forth
-#show data in HTML
+#connection to firebase, back and forth ***
+#show data in HTML ***
+
+once two above done, sky is the limit !!!
+
+
 #show data on every page
 #define page functionality
 #make beautiful UI

@@ -1,6 +1,6 @@
 <template>
 	<div id="dashboard">
-		<h3>dashboard</h3>
+		<h3>Dashboard</h3>
 	</div>
 </template>
 
@@ -14,3 +14,7 @@
 		}
 	}
 </script>
+
+<style scoped>
+
+</style>

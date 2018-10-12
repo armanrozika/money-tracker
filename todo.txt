@@ -1,0 +1,12 @@
+#connection to firebase, back and forth
+#show data in HTML
+#show data on every page
+#define page functionality
+#make beautiful UI
+#make beautiful UX
+#chart the data
+#optimize code
+#do chrome audit
+#browser & device testing
+#push git
+#deploy

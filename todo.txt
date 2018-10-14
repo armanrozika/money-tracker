@@ -3,14 +3,22 @@
 
 once two above done, sky is the limit !!!
 
+#show data on every page ***
+#define page functionality ***
 
-#show data on every page
-#define page functionality
-#make beautiful UI
-#make beautiful UX
+
+#design beautiful UI **
+#design beautiful UX *
+
+
+#make beautiful UI 
+#make beautiful UX 
+
+
 #chart the data
 #optimize code
 #do chrome audit
 #browser & device testing
 #push git
 #deploy
+

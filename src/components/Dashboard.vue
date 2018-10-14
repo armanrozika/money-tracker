@@ -14,7 +14,7 @@
 			<input type="hidden" v-model="year">
 			<br>
 			<button type="submit">&plus;</button>
-			<button id="analyze" type="submit"><i class="fa fa-bar-chart"></i></button>
+			<button id="analyze"><i class="fa fa-bar-chart"></i></button>
 		</form>
 	</div>
 </template>
@@ -47,7 +47,6 @@
 			
 			return {
 				//style binding
-				clientHeight: null,
 				amount: null,
 				item: null,
 				day: dayName[date.getDay()],
@@ -65,7 +64,8 @@
 					day: this.day,
 					week: this.week,
 					month: this.month,
-					year: this.year
+					year: this.year,
+					timestamp: new Date()
 
 				})
 				.then(docRef =>{
@@ -84,29 +84,48 @@
 		},
 
 		created(){
-			db.collection('moneys').get()
-			.then(querySnapshot =>{
-				querySnapshot.forEach(doc=>{
-					//console.log(doc.data()); oputput: >object containing all db
-				})
-			});
+			// db.collection('moneys').get()
+			// .then(querySnapshot =>{
+			// 	querySnapshot.forEach(doc=>{
+			// 		//console.log(doc.data()); oputput: >object containing all db
+			// 	})
+			// });
 			
 		},
 
 		mounted(){
 			let myChart = document.querySelector('#mychart').getContext('2d');
-			let theChart = new Chart(mychart, {
-				type: 'bar',
-				data: {
-					labels: ['aaa', 'bbb', 'ccc', 'ddd', 'eee'],
-					datasets: [{
-							label: 'population',
-							data: [29000, 70000, 80000, 39500, 100000]
-						}
-					]
-				},
-				options:{}
-			})
+			db.collection('moneys').orderBy('timestamp', 'asc').get()
+			.then(querySnapshot =>{
+				let retrieveAmount = [];
+				let retrieveDay = [];
+				querySnapshot.forEach(doc=>{
+					retrieveAmount.push(doc.data().amount)
+					retrieveDay.push(doc.data().day.slice(0,1));
+				});
+				
+				let theChart = new Chart(mychart, {
+						type: 'line',
+						data: {
+							labels: retrieveDay,
+							datasets: [{
+									label: 'amount',
+									data: retrieveAmount
+								}
+							]
+						},
+						options:{}
+					});
+				// querySnapshot.forEach(doc=>{
+				// 	//console.log(doc.data()); oputput: >object containing all db
+
+					
+				// })
+			});
+
+
+			
+			
 		}
 	
 	}

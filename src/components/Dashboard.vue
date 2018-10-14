@@ -6,8 +6,8 @@
 		<form @submit.prevent="reportMoney">
 		
 			<p>what have you bought?</p>
-			<input @focus="shadow" type="text" v-model="item" placeholder="item">
-			<input @focus="shadow" type="text" v-model="amount" placeholder="amount">
+			<input @focus="shadow" @blur="removeShadow" type="text" v-model="item" placeholder="item">
+			<input @focus="shadow" @blur="removeShadow" type="text" v-model="amount" placeholder="amount">
 			<input type="hidden" v-model="day">
 			<input type="hidden" v-model="week">
 			<input type="hidden" v-model="month">
@@ -75,11 +75,13 @@
 				this.item = ''
 			},
 
-			shadow(){
-				let input = document.querySelectorAll('input')
-				input[0].style.boxShadow = '2px 2px 3px black'
+			shadow(event){
+				event.target.style.boxShadow = '0 1px 4px black'
 				// dashboard.style.height = `${this.clientHeight}px`;
-				
+			},
+
+			removeShadow(event){
+				event.target.style.boxShadow = 'none'
 			}
 		},
 

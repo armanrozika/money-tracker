@@ -16,7 +16,10 @@
 				<input type="hidden" v-model="year">
 				<br>
 				<button type="submit" @click="blur">&plus;</button>
-				<button id="analyze"><i class="fa fa-bar-chart"></i></button>
+				<router-link to="/weekly">
+					<button id="analyze"><i class="fa fa-bar-chart"></i></button>
+				</router-link>
+				
 			</form>
 
 		</div>
@@ -91,7 +94,6 @@
 
 			shadow(event){
 				event.target.style.boxShadow = '0 1px 9px rgba(0,0,0,0.6)'
-				// dashboard.style.height = `${this.clientHeight}px`;
 			},
 
 			removeShadow(event){
@@ -102,18 +104,19 @@
 				let allDoc = document.querySelector('.blur');
 				let quoteContainer = document.querySelector('.item-added-container');
 				let quote = document.querySelector('.item-added');
-				quote.style.top = '20%'
 				allDoc.style.filter = 'blur(5px)'
 				quoteContainer.style.visibility = 'visible'
+				quoteContainer.style.opacity = '1'
 			},
 
 			closeQuote(){
 				let quoteContainer = document.querySelector('.item-added-container');
-				quoteContainer.style.visibility = 'hidden'
-				let allDoc = document.querySelector('.blur');
-				allDoc.style.filter = 'none'
 				let quote = document.querySelector('.item-added');
-				quote.style.top = '-300px'
+				let allDoc = document.querySelector('.blur');
+				quoteContainer.style.visibility = 'hidden'
+				allDoc.style.filter = 'none'
+				quoteContainer.style.opacity = '0'
+				
 			}
 		},
 
@@ -130,6 +133,7 @@
 					retrieveAmount.push(doc.data().amount)
 					retrieveDay.push(doc.data().day.slice(0,1));
 				});
+			
 				
 				let theChart = new Chart(mychart, {
 						type: 'line',
@@ -214,13 +218,14 @@
 		width: 100%;
 		height: 100vh;
 		visibility: hidden;
-		transition: visibility 300ms ease;
+		opacity: 0;
+		transition: all 300ms ease;
 		.item-added{
 			position: absolute;
 			width: 80%;
 			height: 200px;
 			background: #fff;
-			top: -400px;
+			top: 20%;
 			left: 50%;
 			transition: top 400ms ease;
 			transform: translateX(-50%);

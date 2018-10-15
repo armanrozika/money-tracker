@@ -20,12 +20,12 @@
 			</form>
 
 		</div>
-	
-		<div class="item-added">
-			<div class="close-quote">
-
+		<div class="item-added-container">
+			<div class="item-added">
+				<button @click="closeQuote" class="close-quote">&times;</button>
 			</div>
 		</div>
+		
 	</div>
 </template>
 
@@ -90,7 +90,7 @@
 			},
 
 			shadow(event){
-				event.target.style.boxShadow = '0 1px 4px black'
+				event.target.style.boxShadow = '0 1px 9px rgba(0,0,0,0.6)'
 				// dashboard.style.height = `${this.clientHeight}px`;
 			},
 
@@ -100,8 +100,20 @@
 
 			blur(){
 				let allDoc = document.querySelector('.blur');
-
+				let quoteContainer = document.querySelector('.item-added-container');
+				let quote = document.querySelector('.item-added');
+				quote.style.top = '20%'
 				allDoc.style.filter = 'blur(5px)'
+				quoteContainer.style.visibility = 'visible'
+			},
+
+			closeQuote(){
+				let quoteContainer = document.querySelector('.item-added-container');
+				quoteContainer.style.visibility = 'hidden'
+				let allDoc = document.querySelector('.blur');
+				allDoc.style.filter = 'none'
+				let quote = document.querySelector('.item-added');
+				quote.style.top = '-300px'
 			}
 		},
 
@@ -182,6 +194,7 @@
 		border: none;
 		border-radius: 50%;
 		background: #2fb53f;
+		outline: none;
 		font-size: 30px;
 		margin-right: 10px;
 	}
@@ -191,17 +204,40 @@
 		margin-left: 10px;
 	}
 	.blur{
+		height: 100vh;
 		transition: filter 300ms ease;
 	}
 
-	.item-added{
+	.item-added-container{
 		position: absolute;
-		width: 80%;
-		height: 200px;
-		background: #ddd;
-		top: 20%;
-		left: 50%;
-		transform: translateX(-50%);
-		border-radius: 10px;
+		top: 0;
+		width: 100%;
+		height: 100vh;
+		visibility: hidden;
+		transition: visibility 300ms ease;
+		.item-added{
+			position: absolute;
+			width: 80%;
+			height: 200px;
+			background: #fff;
+			top: -400px;
+			left: 50%;
+			transition: top 400ms ease;
+			transform: translateX(-50%);
+			border-radius: 10px;
+			filter: drop-shadow(0px 2px 10px rgba(0,0,0,0.6));
+			.close-quote{
+				width: 50px;
+				height: 50px;
+				background: red;
+				position: absolute;
+				bottom: -25px;
+				border-radius: 50%;
+				left: 50%;
+				transform: translateX(-50%);
+				outline: none;
+			}
+		}
 	}
+	
 </style>

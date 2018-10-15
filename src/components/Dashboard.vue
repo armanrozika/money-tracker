@@ -1,21 +1,31 @@
 <template>
 	<div id="dashboard">
-		<div class="main-chart">
-			<canvas id="mychart"> </canvas>
-		</div>
-		<form @submit.prevent="reportMoney">
+		<div class="blur">
+			<div class="main-chart">
+				<canvas id="mychart"> </canvas>
+			</div>
 		
-			<p>what have you bought?</p>
-			<input @focus="shadow" @blur="removeShadow" type="text" v-model="item" placeholder="item">
-			<input @focus="shadow" @blur="removeShadow" type="text" v-model="amount" placeholder="amount">
-			<input type="hidden" v-model="day">
-			<input type="hidden" v-model="week">
-			<input type="hidden" v-model="month">
-			<input type="hidden" v-model="year">
-			<br>
-			<button type="submit">&plus;</button>
-			<button id="analyze"><i class="fa fa-bar-chart"></i></button>
-		</form>
+			<form @submit.prevent="reportMoney">
+		
+				<p>what have you bought?</p>
+				<input @focus="shadow" @blur="removeShadow" type="text" v-model="item" placeholder="item">
+				<input @focus="shadow" @blur="removeShadow" type="text" v-model="amount" placeholder="amount">
+				<input type="hidden" v-model="day">
+				<input type="hidden" v-model="week">
+				<input type="hidden" v-model="month">
+				<input type="hidden" v-model="year">
+				<br>
+				<button type="submit" @click="blur">&plus;</button>
+				<button id="analyze"><i class="fa fa-bar-chart"></i></button>
+			</form>
+
+		</div>
+	
+		<div class="item-added">
+			<div class="close-quote">
+
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -27,12 +37,11 @@
 	export default{
 		name: 'dashboard',
 		data(){
-			
-			const clientHeight = window.innerHeight;
 			const date = new Date();
 			const dayName = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 			const monthName = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-
+			
+			//transform day (number) to day string name
 			function calcWeek(thisdate){
 				if(thisdate<=7){
 					return '1';
@@ -46,9 +55,10 @@
 			}
 			
 			return {
-				//style binding
-				amount: null,
-				item: null,
+				amount: '',
+				item: '',
+
+				//automatically get day, week, month and year
 				day: dayName[date.getDay()],
 				week: calcWeek(date.getDate()),
 				month: monthName[date.getMonth()],
@@ -58,19 +68,23 @@
 
 		methods: {
 			reportMoney(){
-				db.collection('moneys').add({
-					amount: parseInt(this.amount),
-					item: this.item,
-					day: this.day,
-					week: this.week,
-					month: this.month,
-					year: this.year,
-					timestamp: new Date()
-
-				})
-				.then(docRef =>{
+				if(this.item!='' && this.amount!=''){
+					db.collection('moneys').add({
+						amount: parseInt(this.amount),
+						item: this.item,
+						day: this.day,
+						week: this.week,
+						month: this.month,
+						year: this.year,
+						timestamp: new Date()
+					})
+					.then(docRef =>{
 					this.$router.push('/')
-				});
+					});
+				}else{
+					console.log('insert data')
+				}
+			
 				this.amount = ''
 				this.item = ''
 			},
@@ -82,17 +96,16 @@
 
 			removeShadow(event){
 				event.target.style.boxShadow = 'none'
+			},
+
+			blur(){
+				let allDoc = document.querySelector('.blur');
+
+				allDoc.style.filter = 'blur(5px)'
 			}
 		},
 
 		created(){
-			// db.collection('moneys').get()
-			// .then(querySnapshot =>{
-			// 	querySnapshot.forEach(doc=>{
-			// 		//console.log(doc.data()); oputput: >object containing all db
-			// 	})
-			// });
-			
 		},
 
 		mounted(){
@@ -118,22 +131,12 @@
 						},
 						options:{}
 					});
-				// querySnapshot.forEach(doc=>{
-				// 	//console.log(doc.data()); oputput: >object containing all db
-
-					
-				// })
 			});
-
-
-			
-			
 		}
-	
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	#dashboard{
 		width: 100%;
 		height: 100vh;
@@ -170,6 +173,7 @@
 		border: none;
 		border-radius: 25px;
 		outline: none;
+		transition: box-shadow 300ms ease;
 	}
 
 	button{
@@ -182,10 +186,22 @@
 		margin-right: 10px;
 	}
 	
-	
 	#analyze{
 		background: #f1a32f;
 		margin-left: 10px;
-		
+	}
+	.blur{
+		transition: filter 300ms ease;
+	}
+
+	.item-added{
+		position: absolute;
+		width: 80%;
+		height: 200px;
+		background: #ddd;
+		top: 20%;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: 10px;
 	}
 </style>

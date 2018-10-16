@@ -22,3 +22,32 @@ once two above done, sky is the limit !!!
 #push git
 #deploy
 
+let day = ['senin', 'senin', 'selasa', 'rabu', 'senin', 'kamis', 'selasa', 'jumat', 'jumat', 'jumat'];
+
+let amount = [100, 700, 200, 400, 700, 200, 800, 100, 100, 100];
+
+let obj = {};
+
+day.forEach((el, index, arr)=>{
+  if(!obj.hasOwnProperty(el)){
+    obj[el] = amount[index]
+  }else{
+    obj[el]+=amount[index]
+  }
+ 
+});
+
+let finalArrDay = []; 
+let finalArrAmount = [];
+
+for(let key in obj){
+  finalArrDay.push(key);
+}
+
+for(let key in obj){
+  finalArrAmount.push(obj[key]);
+}
+
+console.log(obj)
+console.log(finalArrAmount)
+console.log(finalArrDay)

@@ -29,58 +29,6 @@
 		},
 
 		mounted(){
-			let myChart = document.querySelector('#mychart').getContext('2d');
-			let week2btn = document.querySelector('#week2');
-			let week3btn = document.querySelector('#week3');
-			//Events.on('test', this.test);
-			let day = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
-			let dayMoney = {
-				senin:'', selasa: '', rabu: '', kamis: '', jumat: '', sabtu: '', minggu: ''
-			}
-			//let day = []
-			let amount = [200, 300, 500]
-			
-			let week2Amount = [];
-			let week2Day = [];
-
-			let week3Amount = [];
-			let week3Day = [];
-
-			
-
-			week2btn.addEventListener('click', function(){
-				let theChart = new Chart(mychart, {
-					type: 'line',
-					data: {
-						labels: week2Day,
-						datasets: [{
-								label: 'amount',
-								data: week2Amount
-							}
-						]
-					},
-					options:{}
-				});
-			});
-
-			week3btn.addEventListener('click', function(){
-				let theChart = new Chart(mychart, {
-					type: 'line',
-					data: {
-						labels: day,
-						datasets: [{
-								label: 'amount',
-								data: amount
-							}
-						]
-					},
-					options:{}
-				});
-				console.log(obj)
-			});
-
-			let obj = {}
-
 			db.collection('moneys').orderBy('timestamp', 'asc').get()
 			.then(querySnapshot =>{
 				
@@ -106,18 +54,122 @@
 				
 			});
 
-			let theChart = new Chart(mychart, {
-				type: 'line',
-				data: {
-					labels: day,
-					datasets: [{
-							label: 'amount',
-							data: amount
-						}
-					]
-				},
-				options:{}
+
+			let myChart = document.querySelector('#mychart').getContext('2d');
+			let week2btn = document.querySelector('#week2');
+			let week3btn = document.querySelector('#week3');
+			//Events.on('test', this.test);
+			
+		
+			let week2Day = [];
+			let week2Amount = [];
+			
+			let objw2 = {};
+
+			let w2finishDay = [];
+			let w2finishAmount = [];
+
+			
+
+
+			
+
+			let week3Day = [];
+			let week3Amount = [];
+			
+			let objw3 = {};
+
+			let w3finishDay = [];
+			let w3finishAmount = [];
+
+			
+
+			week2btn.addEventListener('click', function(){
+				console.log(week2Day)
+				console.log(week2Amount)
+				console.log(objw2);
+
+				week2Day.forEach((el, index, arr)=>{
+					console.log('mama')
+				  if(!objw2.hasOwnProperty(el)){
+				    objw2[el] = week2Amount[index]
+				  }else{
+				    objw2[el]+=week2Amount[index]
+				  }
+				 
+				});
+
+				for(let key in objw2){
+					w2finishDay .push(key);
+				}
+
+				for(let key in objw2){
+				  w2finishAmount.push(objw2[key]);
+				}
+				let theChart = new Chart(mychart, {
+					type: 'line',
+					data: {
+						labels: w2finishDay,
+						datasets: [{
+								label: 'amount',
+								data: w2finishAmount
+							}
+						]
+					},
+					options:{}
+				});
 			});
+
+			week3btn.addEventListener('click', function(){
+				week3Day.forEach((el, index, arr)=>{
+					console.log('mama')
+				  if(!objw3.hasOwnProperty(el)){
+				    objw3[el] = week3Amount[index]
+				  }else{
+				    objw3[el]+=week3Amount[index]
+				  }
+				 
+				});
+
+				for(let key in objw3){
+					w3finishDay.push(key);
+				}
+
+				for(let key in objw3){
+				  w3finishAmount.push(objw3[key]);
+				}
+
+				let theChart = new Chart(mychart, {
+					type: 'line',
+					data: {
+						labels: w3finishDay,
+						datasets: [{
+								label: 'amount',
+								data: w3finishAmount
+							}
+						]
+					},
+					options:{}
+				});
+				console.log(w3finishAmount)
+			});
+
+			let obj = {}
+
+			
+
+			// let theChart = new Chart(mychart, {
+			// 	type: 'line',
+			// 	data: {
+			// 		labels: day,
+			// 		datasets: [{
+			// 				label: 'amount',
+			// 				data: amount
+			// 			}
+			// 		]
+			// 	},
+			// 	options:{}
+			// });
 		}
 	}
 </script>

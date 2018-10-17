@@ -1,6 +1,6 @@
 <template>
 	<div id="weekly">
-		<h3 @click="test">weekly</h3>
+		<h3>weekly</h3>
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
@@ -38,7 +38,7 @@
 				
 				querySnapshot.forEach(doc=>{
 					//console.log(doc.data().week)
-					if(doc.data().month == monthName[date.getMonth()]){
+					if(doc.data().month == monthName[date.getMonth()] && doc.data().year == date.getFullYear()){
 						if(doc.data().week == 1){
 							week1Amount.push(doc.data().amount)
 							week1Day.push(doc.data().day)
@@ -56,78 +56,48 @@
 					
 				});
 			}).then(()=>{
-				week1Day.forEach((el, index, arr)=>{
-				  if(!objw1.hasOwnProperty(el)){
-				    objw1[el] = week1Amount[index]
-				  }else{
-				    objw1[el]+=week1Amount[index]
-				  }
+				function calcDataPerWeek(week,obj, amount, finishday, finishamount){
+					week.forEach((el, index, arr)=>{
+						if(!obj.hasOwnProperty(el)){
+						obj[el] = amount[index];
+						}else{
+							obj[el]+= amount[index];
+						};
+					})
+
+					for(let k in obj){
+						finishday.push(k)
+					}
+
+					for(let k in obj){
+						finishamount.push(obj[k]);
+					}
+				};
+
+				calcDataPerWeek(week1Day, objw1, week1Amount,w1finishDay, w1finishAmount)
+				calcDataPerWeek(week2Day, objw2, week2Amount,w2finishDay, w2finishAmount)
+				calcDataPerWeek(week3Day, objw3, week3Amount,w3finishDay, w3finishAmount)
+				calcDataPerWeek(week4Day, objw4, week4Amount,w4finishDay, w4finishAmount)
+
+				//just in case i dont know what my function does
+
+				// week1Day.forEach((el, index, arr)=>{
+				//   if(!objw1.hasOwnProperty(el)){
+				//     objw1[el] = week1Amount[index]
+				//   }else{
+				//     objw1[el]+=week1Amount[index]
+				//   }
 				 
-				});
+				// });
 
-				for(let key in objw1){
-					w1finishDay.push(key);
-				}
+				// for(let key in objw1){
+				// 	w1finishDay.push(key);
+				// }
 
-				for(let key in objw1){
-				  w1finishAmount.push(objw1[key]);
-				}
+				// for(let key in objw1){
+				//   w1finishAmount.push(objw1[key]);
+				// }
 
-
-				week2Day.forEach((el, index, arr)=>{
-				  if(!objw2.hasOwnProperty(el)){
-				    objw2[el] = week2Amount[index]
-				  }else{
-				    objw2[el]+=week2Amount[index]
-				  }
-				 
-				});
-
-				for(let key in objw2){
-					w2finishDay .push(key);
-				}
-
-				for(let key in objw2){
-				  w2finishAmount.push(objw2[key]);
-				}
-
-
-				week3Day.forEach((el, index, arr)=>{
-				  if(!objw3.hasOwnProperty(el)){
-				    objw3[el] = week3Amount[index]
-				  }else{
-				    objw3[el]+=week3Amount[index]
-				  }
-				 
-				});
-
-				for(let key in objw3){
-					w3finishDay.push(key);
-				}
-
-				for(let key in objw3){
-				  w3finishAmount.push(objw3[key]);
-				}
-
-
-
-				week4Day.forEach((el, index, arr)=>{
-					console.log('mama')
-				  if(!objw4.hasOwnProperty(el)){
-				    objw4[el] = week4Amount[index]
-				  }else{
-				    objw4[el]+=week4Amount[index]
-				  }
-				 
-				});
-
-				for(let key in objw4){
-					w4finishDay.push(key);
-				}
-
-				for(let key in objw4){
-				  w4finishAmount.push(objw4[key]);
-				}
 			});
 
 
@@ -164,7 +134,6 @@
 
 			
 			week1btn.addEventListener('click', function(){
-				
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -181,7 +150,6 @@
 
 
 			week2btn.addEventListener('click', function(){
-				
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -197,8 +165,6 @@
 			});
 
 			week3btn.addEventListener('click', function(){
-				
-
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -214,8 +180,7 @@
 				
 			});
 
-			week4btn.addEventListener('click', function(){
-				
+			week4btn.addEventListener('click', function(){	
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {

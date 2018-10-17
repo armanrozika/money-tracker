@@ -4,9 +4,10 @@
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
-
+		<button id="week1">week1</button>
 		<button id="week2">week2</button>
 		<button id="week3">week3</button>
+		<button id="week4">week4</button>
 	</div>
 </template>
 
@@ -29,68 +30,51 @@
 		},
 
 		mounted(){
+			let date = new Date();
+			const monthName = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 			db.collection('moneys').orderBy('timestamp', 'asc').get()
 			.then(querySnapshot =>{
 				
 				
 				querySnapshot.forEach(doc=>{
 					//console.log(doc.data().week)
-					
-					if(doc.data().week == 2){
-						week2Amount.push(doc.data().amount)
-						week2Day.push(doc.data().day)
-					}else if(doc.data().week == 3){
-						let key = doc.data().day;
-						obj[key] = doc.data().amount;
-						week3Amount.push(doc.data().amount)
-						week3Day.push(doc.data().day)
+					if(doc.data().month == monthName[date.getMonth()]){
+						if(doc.data().week == 1){
+							week1Amount.push(doc.data().amount)
+							week1Day.push(doc.data().day)
+						}else if(doc.data().week == 2){
+							week2Amount.push(doc.data().amount)
+							week2Day.push(doc.data().day)
+						}else if(doc.data().week == 3){
+							week3Amount.push(doc.data().amount)
+							week3Day.push(doc.data().day)
+						}else{
+							week4Amount.push(doc.data().amount)
+							week4Day.push(doc.data().day)
+						}
 					}
-					// retrieveAmount.push(doc.data().amount)
-					// retrieveDay.push(doc.data().day.slice(0,1));
+					
+				});
+			}).then(()=>{
+				week1Day.forEach((el, index, arr)=>{
+				  if(!objw1.hasOwnProperty(el)){
+				    objw1[el] = week1Amount[index]
+				  }else{
+				    objw1[el]+=week1Amount[index]
+				  }
+				 
 				});
 
-				
-				//change week
-				
-			});
+				for(let key in objw1){
+					w1finishDay.push(key);
+				}
 
+				for(let key in objw1){
+				  w1finishAmount.push(objw1[key]);
+				}
 
-			let myChart = document.querySelector('#mychart').getContext('2d');
-			let week2btn = document.querySelector('#week2');
-			let week3btn = document.querySelector('#week3');
-			//Events.on('test', this.test);
-			
-		
-			let week2Day = [];
-			let week2Amount = [];
-			
-			let objw2 = {};
-
-			let w2finishDay = [];
-			let w2finishAmount = [];
-
-			
-
-
-			
-
-			let week3Day = [];
-			let week3Amount = [];
-			
-			let objw3 = {};
-
-			let w3finishDay = [];
-			let w3finishAmount = [];
-
-			
-
-			week2btn.addEventListener('click', function(){
-				console.log(week2Day)
-				console.log(week2Amount)
-				console.log(objw2);
 
 				week2Day.forEach((el, index, arr)=>{
-					console.log('mama')
 				  if(!objw2.hasOwnProperty(el)){
 				    objw2[el] = week2Amount[index]
 				  }else{
@@ -106,23 +90,9 @@
 				for(let key in objw2){
 				  w2finishAmount.push(objw2[key]);
 				}
-				let theChart = new Chart(mychart, {
-					type: 'line',
-					data: {
-						labels: w2finishDay,
-						datasets: [{
-								label: 'amount',
-								data: w2finishAmount
-							}
-						]
-					},
-					options:{}
-				});
-			});
 
-			week3btn.addEventListener('click', function(){
+
 				week3Day.forEach((el, index, arr)=>{
-					console.log('mama')
 				  if(!objw3.hasOwnProperty(el)){
 				    objw3[el] = week3Amount[index]
 				  }else{
@@ -139,6 +109,96 @@
 				  w3finishAmount.push(objw3[key]);
 				}
 
+
+
+				week4Day.forEach((el, index, arr)=>{
+					console.log('mama')
+				  if(!objw4.hasOwnProperty(el)){
+				    objw4[el] = week4Amount[index]
+				  }else{
+				    objw4[el]+=week4Amount[index]
+				  }
+				 
+				});
+
+				for(let key in objw4){
+					w4finishDay.push(key);
+				}
+
+				for(let key in objw4){
+				  w4finishAmount.push(objw4[key]);
+				}
+			});
+
+
+			let myChart = document.querySelector('#mychart').getContext('2d');
+			let week1btn = document.querySelector('#week1');
+			let week2btn = document.querySelector('#week2');
+			let week3btn = document.querySelector('#week3');
+			let week4btn = document.querySelector('#week4');
+			
+			//weeks data holder
+			let week1Day = [];
+			let week1Amount = [];
+			let objw1 = {};
+			let w1finishDay = [];
+			let w1finishAmount = [];
+
+			let week2Day = [];
+			let week2Amount = [];
+			let objw2 = {};
+			let w2finishDay = [];
+			let w2finishAmount = [];
+
+			let week3Day = [];
+			let week3Amount = [];
+			let objw3 = {};
+			let w3finishDay = [];
+			let w3finishAmount = [];
+
+			let week4Day = [];
+			let week4Amount = [];
+			let objw4 = {};
+			let w4finishDay = [];
+			let w4finishAmount = [];
+
+			
+			week1btn.addEventListener('click', function(){
+				
+				let theChart = new Chart(mychart, {
+					type: 'line',
+					data: {
+						labels: w1finishDay,
+						datasets: [{
+								label: 'amount',
+								data: w1finishAmount
+							}
+						]
+					},
+					options:{}
+				});
+			});
+
+
+			week2btn.addEventListener('click', function(){
+				
+				let theChart = new Chart(mychart, {
+					type: 'line',
+					data: {
+						labels: w2finishDay,
+						datasets: [{
+								label: 'amount',
+								data: w2finishAmount
+							}
+						]
+					},
+					options:{}
+				});
+			});
+
+			week3btn.addEventListener('click', function(){
+				
+
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -151,25 +211,39 @@
 					},
 					options:{}
 				});
-				console.log(w3finishAmount)
+				
 			});
 
-			let obj = {}
+			week4btn.addEventListener('click', function(){
+				
+				let theChart = new Chart(mychart, {
+					type: 'line',
+					data: {
+						labels: w4finishDay,
+						datasets: [{
+								label: 'amount',
+								data: w4finishAmount
+							}
+						]
+					},
+					options:{}
+				});
+			});
 
-			
+			//default chart, draw empty chart
 
-			// let theChart = new Chart(mychart, {
-			// 	type: 'line',
-			// 	data: {
-			// 		labels: day,
-			// 		datasets: [{
-			// 				label: 'amount',
-			// 				data: amount
-			// 			}
-			// 		]
-			// 	},
-			// 	options:{}
-			// });
+			let theChart = new Chart(mychart, {
+				type: 'line',
+				data: {
+					labels: '',
+					datasets: [{
+							label: 'amount',
+							data: ''
+						}
+					]
+				},
+				options:{}
+			});
 		}
 	}
 </script>

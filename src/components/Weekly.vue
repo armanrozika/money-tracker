@@ -8,6 +8,10 @@
 		<button id="week2">week2</button>
 		<button id="week3">week3</button>
 		<button id="week4">week4</button>
+		<br><br>
+		<router-link to="/monthly">
+			<button>switch to monthly</button>
+		</router-link>
 	</div>
 </template>
 

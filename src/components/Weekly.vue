@@ -34,8 +34,6 @@
 			const monthName = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 			db.collection('moneys').orderBy('timestamp', 'asc').get()
 			.then(querySnapshot =>{
-				
-				
 				querySnapshot.forEach(doc=>{
 					//console.log(doc.data().week)
 					if(doc.data().month == monthName[date.getMonth()] && doc.data().year == date.getFullYear()){
@@ -56,7 +54,7 @@
 					
 				});
 			}).then(()=>{
-				function calcDataPerWeek(week,obj, amount, finishday, finishamount){
+				function calcDataPerWeek(week, obj, amount, finishday, finishamount){
 					week.forEach((el, index, arr)=>{
 						if(!obj.hasOwnProperty(el)){
 						obj[el] = amount[index];
@@ -74,10 +72,10 @@
 					}
 				};
 
-				calcDataPerWeek(week1Day, objw1, week1Amount,w1finishDay, w1finishAmount)
-				calcDataPerWeek(week2Day, objw2, week2Amount,w2finishDay, w2finishAmount)
-				calcDataPerWeek(week3Day, objw3, week3Amount,w3finishDay, w3finishAmount)
-				calcDataPerWeek(week4Day, objw4, week4Amount,w4finishDay, w4finishAmount)
+				calcDataPerWeek(week1Day, objw1, week1Amount, w1finishDay, w1finishAmount)
+				calcDataPerWeek(week2Day, objw2, week2Amount, w2finishDay, w2finishAmount)
+				calcDataPerWeek(week3Day, objw3, week3Amount, w3finishDay, w3finishAmount)
+				calcDataPerWeek(week4Day, objw4, week4Amount, w4finishDay, w4finishAmount)
 
 				//just in case i dont know what my function does
 

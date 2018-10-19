@@ -1,13 +1,17 @@
 <template>
 	<div id="weekly">
-		<h3>weekly</h3>
+		<h3>Weekly Chart</h3>
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
-		<button id="week1">week1</button>
-		<button id="week2">week2</button>
-		<button id="week3">week3</button>
-		<button id="week4">week4</button>
+		<p>weeks:</p>
+		<div class="btn-wrap" @click="changeBg">
+			<button id="week1">1</button>
+			<button id="week2">2</button>
+			<button id="week3">3</button>
+			<button id="week4">4</button>
+		</div>
+		
 		<br><br>
 		<router-link to="/monthly">
 			<button>switch to monthly</button>
@@ -30,6 +34,13 @@
 		methods:{
 			test(){
 				console.log('test')
+			},
+
+			changeBg(e){
+				e.target.style.background = '#33C3BA';
+				if(!e.target){
+					e.target.style.background = '#45BCE2';
+				}
 			}
 		},
 
@@ -214,3 +225,41 @@
 		}
 	}
 </script>
+
+<style scoped lang="scss">
+	#weekly{
+		width: 100%;
+		height: 100vh;
+	/*	position: fixed;*/
+		background-image: linear-gradient(to bottom, #59c799, #dd6aea);
+		padding-top: 20px;
+		p{
+			text-align: center;
+		}
+	}
+	.main-chart{
+		width: 90%;
+		height: 170px;
+		background: #fff;
+		margin: 0 auto;
+	}
+	h3{
+		text-align: center;
+	}
+
+	.btn-wrap{
+		width: 80%;
+		display: flex;
+		margin: 0 auto;
+		justify-content: space-between;
+		margin-top: 20px;
+		button{
+			width: 50px; 
+			height: 50px;
+			border-radius: 50%;
+			background: #45BCE2;
+			border: none;
+		}
+
+	}
+</style>

@@ -21,9 +21,18 @@
 			<option>Desember</option>
 		</select>
 
+		<select name="" id="" v-model="tahun">
+			<option disabled value="">Tahun</option>
+			<option>2018</option>
+			<option>2019</option>
+			<option>2020</option>
+		</select>
+		
 		<router-link to="/weekly">
 			<button>switch to weekly</button>
 		</router-link>
+
+		<button @click="test">TEST</button>
 	</div>
 </template>
 
@@ -36,10 +45,135 @@
 		data(){
 			return {
 				bulan: '',
+				data: '',
+				tahun: 2018
+			}
+		},
+		methods:{
+			test(){
+			},
+
+			drawChart(){
+				let bulanData = []
+				this.data.forEach((el, index, arr)=>{
+					if(el.year == this.tahun){
+						if(el.month == this.bulan){
+							bulanData.push(el);
+						}
+					}
+				});
+				//console.log(bulanData)
+
+				let week1d = []
+				let week1am = []
+				let objw1 = {}
+				let wfd1 = []
+				let wfd1am = []
+
+				let week2d = []
+				let week2am = []
+				let objw2 = {}
+				let wfd2 = []
+				let wfd2am = []
+
+				let week3d = []
+				let week3am = []
+				let objw3 = {}
+				let wfd3 = []
+				let wfd3am = []
+
+				let week4d = []
+				let week4am = []
+				let objw4 = {}
+				let wfd4 = []
+				let wfd4am = []
+
+				bulanData.forEach((el, index, arr)=>{
+					if(el.week == 1){
+						week1d.push(el.day)
+						week1am.push(el.amount)
+						//console.log(el.day)
+					}else if(el.week == 2){
+						week2d.push(el.day)
+						week2am.push(el.amount)
+					}else if(el.week == 3){
+						week3d.push(el.day)
+						week3am.push(el.amount)
+					}else{
+						week4d.push(el.day)
+						week4am.push(el.amount)
+					}
+				});
+				// console.log(week1d)
+
+				function calcDataPerWeek(week, obj, amount, finishday, finishamount){
+					week.forEach((el, index, arr)=>{
+						if(!obj.hasOwnProperty(el)){
+						obj[el] = amount[index];
+						}else{
+							obj[el]+= amount[index];
+						};
+					})
+
+					for(let k in obj){
+						finishday.push(k)
+					}
+
+					for(let k in obj){
+						finishamount.push(obj[k]);
+					}
+				};
+
+				calcDataPerWeek(week1d, objw1, week1am, wfd1, wfd1am)
+				calcDataPerWeek(week2d, objw2, week2am, wfd2, wfd2am)
+				calcDataPerWeek(week3d, objw3, week3am, wfd3, wfd3am)
+				calcDataPerWeek(week4d, objw4, week4am, wfd4, wfd4am)
+
+				let monthAmount = wfd1am.concat(wfd2am,wfd3am,wfd4am)
+				let labels = []
+				for(let i=0; i<monthAmount.length; i++){
+					labels.push('.')
+				}
+
+
+				let theChart = new Chart(mychart, {
+					type: 'line',
+					data: {
+						labels: labels,
+						datasets: [{
+								label: 'amount',
+								data: monthAmount
+							}
+						]
+					},
+					options:{}
+				});
+			}
+		},
+
+		watch: {
+			bulan: function(){
+				this.drawChart()
 			}
 		},
 
 		mounted(){
+			// let date = new Date();
+			// let year = date.getFullYear();
+
+			let dataFromDb = [];
+			this.data = dataFromDb;
+			db.collection('moneys').orderBy('timestamp', 'asc').get()
+			.then(querySnapshot=>{
+				querySnapshot.forEach(doc=>{
+					dataFromDb.push(doc.data())
+				})
+			});
+
+
+			//console.log(dataFromDb)
+
+			//default chart, empty
 			let theChart = new Chart(mychart, {
 				type: 'line',
 				data: {

@@ -37,10 +37,11 @@
 			},
 
 			changeBg(e){
-				e.target.style.background = '#33C3BA';
-				if(!e.target){
-					e.target.style.background = '#45BCE2';
+				let color = document.querySelectorAll('.btn-wrap button');
+				for(let i=0; i<color.length; i++){
+					color[i].style.background = '#45BCE2'
 				}
+				e.target.style.background = '#33C3BA';
 			}
 		},
 
@@ -220,7 +221,10 @@
 						}
 					]
 				},
-				options:{}
+				options:{
+					responsive: true,
+    				maintainAspectRatio: true
+				}
 			});
 		}
 	}
@@ -239,7 +243,7 @@
 	}
 	.main-chart{
 		width: 90%;
-		height: 170px;
+		// height: 170px;
 		background: #fff;
 		margin: 0 auto;
 	}
@@ -259,6 +263,7 @@
 			border-radius: 50%;
 			background: #45BCE2;
 			border: none;
+			outline: none;
 		}
 
 	}

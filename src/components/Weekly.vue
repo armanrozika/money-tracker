@@ -222,8 +222,8 @@
 					]
 				},
 				options:{
-					responsive: true,
-    				maintainAspectRatio: true
+					// responsive: true,
+    	// 			maintainAspectRatio: true
 				}
 			});
 		}
@@ -243,7 +243,7 @@
 	}
 	.main-chart{
 		width: 90%;
-		// height: 170px;
+		height: 170px;
 		background: #fff;
 		margin: 0 auto;
 	}

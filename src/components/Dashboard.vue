@@ -128,20 +128,20 @@
 			db.collection('moneys').orderBy('timestamp', 'asc').get()
 			.then(querySnapshot =>{
 				let retrieveAmount = [];
-				let retrieveDay = [];
+				let retrieveItem = [];
 				querySnapshot.forEach(doc=>{
 					retrieveAmount.push(doc.data().amount)
-					retrieveDay.push(doc.data().day.slice(0,1));
+					retrieveItem.push(doc.data().item);
 				});
 			
 				
 				let theChart = new Chart(mychart, {
 						type: 'line',
 						data: {
-							labels: retrieveDay,
+							labels: retrieveItem.slice(-10),
 							datasets: [{
 									label: 'amount',
-									data: retrieveAmount
+									data: retrieveAmount.slice(-10)
 								}
 							]
 						},

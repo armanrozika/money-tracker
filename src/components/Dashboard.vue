@@ -25,6 +25,7 @@
 		</div>
 		<div class="item-added-container">
 			<div class="item-added">
+				<div class="item-green">item added</div>
 				<button @click="closeQuote" class="close-quote">&times;</button>
 			</div>
 		</div>
@@ -231,6 +232,16 @@
 			transform: translateX(-50%);
 			border-radius: 10px;
 			filter: drop-shadow(0px 2px 10px rgba(0,0,0,0.6));
+			.item-green{
+				width: 50%;
+				text-align: center;
+				padding: 5px 3px;
+				background: #3dc33d;
+				position: absolute;
+				top: 0;
+				left: 50%;
+				transform: translateX(-50%);
+			}
 			.close-quote{
 				width: 50px;
 				height: 50px;

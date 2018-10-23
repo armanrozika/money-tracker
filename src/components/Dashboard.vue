@@ -26,6 +26,7 @@
 		<div class="item-added-container">
 			<div class="item-added">
 				<div class="item-green">item added</div>
+				<p id="quote">{{quote}}</p>
 				<button @click="closeQuote" class="close-quote">&times;</button>
 			</div>
 		</div>
@@ -61,7 +62,7 @@
 			return {
 				amount: '',
 				item: '',
-
+				quote: '',
 				//automatically get day, week, month and year
 				day: dayName[date.getDay()],
 				week: calcWeek(date.getDate()),
@@ -108,6 +109,24 @@
 				allDoc.style.filter = 'blur(5px)'
 				quoteContainer.style.visibility = 'visible'
 				quoteContainer.style.opacity = '1'
+
+
+				//fetch random quotes
+				const myHeaders = new Headers();
+				
+				myHeaders.append('Content-Type', 'application/json');
+				myHeaders.append('X-Mashape-Key', '6Efj1Yzy8kmshmgoVmBjLXHVDxMPp1LFPt2jsndHcRvmYvT78R');
+				fetch('https://andruxnet-random-famous-quotes.p.mashape.com/?cat=famous&count=1',{
+					method: 'GET',
+					headers: myHeaders,
+				})
+				.then(response =>{
+					return response.json()
+				})
+				.then(data => {
+					//console.log(data) output = array containing 1 quote, hence data[0], it's fuckin array !
+					this.quote = data[0].quote;
+				})
 			},
 
 			closeQuote(){

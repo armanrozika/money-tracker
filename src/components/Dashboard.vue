@@ -103,6 +103,7 @@
 			},
 
 			blur(){
+				this.quote = ''
 				let allDoc = document.querySelector('.blur');
 				let quoteContainer = document.querySelector('.item-added-container');
 				let quote = document.querySelector('.item-added');
@@ -251,6 +252,11 @@
 			transform: translateX(-50%);
 			border-radius: 10px;
 			filter: drop-shadow(0px 2px 10px rgba(0,0,0,0.6));
+			#quote{
+				margin-top: 35px;
+				font-size: 15px;
+				padding: 0 7px;
+			}
 			.item-green{
 				width: 50%;
 				text-align: center;

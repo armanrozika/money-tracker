@@ -87,7 +87,7 @@
 					this.$router.push('/')
 					});
 				}else{
-					//console.log('insert data')
+					//alert('insert both item & amount')
 				}
 			
 				this.amount = ''

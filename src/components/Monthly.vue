@@ -1,10 +1,13 @@
 <template>
 	<div id="monthly">
-		<h3>monthly</h3>
+		<h3>Monthly Chart</h3>
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
-		<p>test: {{bulan}}</p>
+		<p>Bulan: {{bulan}}</p>
+		<div class="options">
+			
+		
 		<select name="" id="" v-model="bulan">
 			<option disabled value="">Bulan</option>
 			<option>Januari</option>
@@ -27,12 +30,22 @@
 			<option>2019</option>
 			<option>2020</option>
 		</select>
-		
-		<router-link to="/weekly">
-			<button>switch to weekly</button>
-		</router-link>
+		</div>
 
-		<button @click="test">TEST</button>
+		<br><br>
+		<div class="weekly-switch">
+			<router-link to="/weekly">
+				<button>switch to weekly</button>
+			</router-link>
+		</div>
+
+		<div class="home">
+			<router-link to="/">
+				<button><i class="fa fa-home"></i></button>
+				<p>home</p>
+			</router-link>
+		</div>
+		
 	</div>
 </template>
 
@@ -189,8 +202,65 @@
 		}
 	}
 
-
-	
-
-
 </script>
+
+<style lang="scss">
+	a{
+		color: #000;
+	}
+
+	#monthly{
+		width: 100%;
+		height: 100vh;
+	/*	position: fixed;*/
+		background-image: linear-gradient(to bottom, #59c799, #dd6aea);
+		padding-top: 20px;
+		h3{
+			text-align: center;
+		}
+		.main-chart{
+			width: 90%;
+			height: 170px;
+			background: #fff;
+			margin: 0 auto;
+		}
+		p{
+			text-align: center;
+		}
+		.options{
+			text-align: center;
+			select{
+				padding: 5px 10px;
+				border: none;
+				background: #ab5ee0;
+				outline: none;
+			}
+			select:nth-child(1){
+				width: 150px;
+			}
+		}
+		.weekly-switch{
+			text-align: center;
+			button{
+				padding: 10px 15px;
+				border: none;
+				border-radius: 30px;
+				background: #3abfd8;
+			}
+		}
+		.home{
+			margin-top: 30px;
+			text-align: center;
+			button{
+				font-size: 40px;
+				border: none;
+				background: none;
+				margin-bottom: 0;
+				color: #e6d334;
+			}
+			p{
+				margin-top: -7px;
+			}
+		}
+	}
+</style>

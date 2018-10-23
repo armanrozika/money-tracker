@@ -1,6 +1,8 @@
 <template>
 	<div id="weekly">
+		
 		<h3>Weekly Chart</h3>
+
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
@@ -13,9 +15,20 @@
 		</div>
 		
 		<br><br>
-		<router-link to="/monthly">
-			<button>switch to monthly</button>
-		</router-link>
+		<div class="monthly-switch">
+			<router-link to="/monthly">
+				<button>switch to monthly</button>
+			</router-link>
+		</div>
+		
+		<div class="home">
+			<router-link to="/">
+				<button><i class="fa fa-home"></i></button>
+				<p>home</p>
+			</router-link>
+		</div>
+		
+		
 	</div>
 </template>
 
@@ -231,6 +244,9 @@
 </script>
 
 <style scoped lang="scss">
+a{
+	color: #000;
+}
 	#weekly{
 		width: 100%;
 		height: 100vh;
@@ -240,6 +256,33 @@
 		p{
 			text-align: center;
 		}
+		h3{
+			text-align: center;
+		}
+		.monthly-switch{
+			margin: 0 auto;
+			text-align: center;
+			button{
+				padding: 10px 15px;
+				border: none;
+				border-radius: 30px;
+				background: #ab5ee0;
+			}
+		}
+		.home{
+			margin-top: 30px;
+			text-align: center;
+			button{
+				font-size: 40px;
+				border: none;
+				background: none;
+				margin-bottom: 0;
+				color: #e6d334;
+			}
+			p{
+				margin-top: -7px;
+			}
+		}
 	}
 	.main-chart{
 		width: 90%;
@@ -247,9 +290,7 @@
 		background: #fff;
 		margin: 0 auto;
 	}
-	h3{
-		text-align: center;
-	}
+
 
 	.btn-wrap{
 		width: 80%;
@@ -264,6 +305,7 @@
 			background: #45BCE2;
 			border: none;
 			outline: none;
+			
 		}
 
 	}

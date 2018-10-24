@@ -14,7 +14,7 @@
 			<button id="week4">4</button>
 		</div>
 		
-		<br><br>
+		
 		<div class="monthly-switch">
 			<router-link to="/monthly">
 				<button>switch to monthly</button>
@@ -247,12 +247,29 @@
 a{
 	color: #000;
 }
+
+	@mixin if-moreThan-768px{
+		@media (min-width: 768px){
+			@content;
+		}
+	}
+
+	canvas{
+		@include if-moreThan-768px{
+			width: 700px !important;
+			height: 300px !important;
+		}
+	}
+
 	#weekly{
 		width: 100%;
 		height: 100vh;
 	/*	position: fixed;*/
 		background-image: linear-gradient(to bottom, #59c799, #dd6aea);
 		padding-top: 20px;
+		@include if-moreThan-768px{
+			padding-top: 5px;
+		}
 		p{
 			text-align: center;
 		}
@@ -267,11 +284,16 @@ a{
 				border: none;
 				border-radius: 30px;
 				background: #ab5ee0;
+				margin-top: 20px;
+				margin-bottom: 10px;
 			}
 		}
 		.home{
 			margin-top: 30px;
 			text-align: center;
+			@include if-moreThan-768px{
+				margin-top: 0;
+			}
 			button{
 				font-size: 40px;
 				border: none;
@@ -289,6 +311,10 @@ a{
 		height: 170px;
 		background: #fff;
 		margin: 0 auto;
+		@include if-moreThan-768px{
+			width: 700px;
+			height: 300px;
+		}
 	}
 
 
@@ -298,6 +324,9 @@ a{
 		margin: 0 auto;
 		justify-content: space-between;
 		margin-top: 20px;
+		@include if-moreThan-768px{
+			width: 25%;
+		}
 		button{
 			width: 50px; 
 			height: 50px;

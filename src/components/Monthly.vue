@@ -32,7 +32,6 @@
 		</select>
 		</div>
 
-		<br><br>
 		<div class="weekly-switch">
 			<router-link to="/weekly">
 				<button>switch to weekly</button>
@@ -208,6 +207,18 @@
 	a{
 		color: #000;
 	}
+	@mixin if-moreThan-768px{
+		@media (min-width: 768px){
+			@content;
+		}
+	}
+
+	canvas{
+		@include if-moreThan-768px{
+			width: 700px !important;
+			height: 300px !important;
+		}
+	}
 
 	#monthly{
 		width: 100%;
@@ -223,6 +234,10 @@
 			height: 170px;
 			background: #fff;
 			margin: 0 auto;
+			@include if-moreThan-768px{
+				width: 700px;
+				height: 300px;
+			}
 		}
 		p{
 			text-align: center;
@@ -241,6 +256,7 @@
 		}
 		.weekly-switch{
 			text-align: center;
+			margin-top: 20px;
 			button{
 				padding: 10px 15px;
 				border: none;

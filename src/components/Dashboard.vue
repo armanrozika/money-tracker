@@ -174,12 +174,28 @@
 </script>
 
 <style scoped lang="scss">
+	@mixin if-moreThan-768px{
+		@media (min-width: 768px){
+			@content;
+		}
+	}
+
+	canvas{
+		@include if-moreThan-768px{
+			width: 700px !important;
+			height: 300px !important;
+		}
+	}
+
 	#dashboard{
 		width: 100%;
 		height: 100vh;
 	/*	position: fixed;*/
 		background-image: linear-gradient(to bottom, #59c799, #dd6aea);
 		padding-top: 20px;
+		@include if-moreThan-768px{
+			padding-top: 60px;
+		}
 	}
 
 	.main-chart{
@@ -187,6 +203,10 @@
 		height: 170px;
 		background: #fff;
 		margin: 0 auto;
+		@include if-moreThan-768px{
+			width: 700px;
+			height: 300px;
+		}
 	}
 
 	form{
@@ -211,6 +231,9 @@
 		border-radius: 25px;
 		outline: none;
 		transition: box-shadow 300ms ease;
+		@include if-moreThan-768px{
+			width: 14%;
+		}
 	}
 
 	button{
@@ -252,6 +275,9 @@
 			transform: translateX(-50%);
 			border-radius: 10px;
 			filter: drop-shadow(0px 2px 10px rgba(0,0,0,0.6));
+			@include if-moreThan-768px{
+				width: 50%;
+			}
 			#quote{
 				margin-top: 35px;
 				font-size: 15px;

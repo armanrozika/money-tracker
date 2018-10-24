@@ -4,7 +4,7 @@
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
-		<p>Bulan: {{bulan}}</p>
+		<p>Total: {{total}}</p>
 		<div class="options">
 			
 		
@@ -58,7 +58,8 @@
 			return {
 				bulan: '',
 				data: '',
-				tahun: 2018
+				tahun: 2018,
+				total: ''
 			}
 		},
 		methods:{
@@ -142,6 +143,9 @@
 				calcDataPerWeek(week4d, objw4, week4am, wfd4, wfd4am)
 
 				let monthAmount = wfd1am.concat(wfd2am,wfd3am,wfd4am)
+				this.total = monthAmount.reduce((a,b)=>{
+					return a+b;
+				})
 				let labels = []
 				for(let i=0; i<monthAmount.length; i++){
 					labels.push('.')

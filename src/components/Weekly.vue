@@ -6,7 +6,7 @@
 		<div class="main-chart">
 			<canvas id="mychart"> </canvas>
 		</div>
-		<p>weeks:</p>
+		<p>Total: {{total}}</p>
 		<div class="btn-wrap" @click="changeBg">
 			<button id="week1">1</button>
 			<button id="week2">2</button>
@@ -40,13 +40,13 @@
 		name: 'weekly',
 		data(){
 			return {
-				
+				total: ''
 			}
 		},
 
 		methods:{
 			test(){
-				console.log('test')
+				console.log(this.total)
 			},
 
 			changeBg(e){
@@ -57,6 +57,12 @@
 				e.target.style.background = '#33C3BA';
 			}
 		},
+
+		// watch:{
+		// 	total: function(){
+		// 		this.test()
+		// 	}
+		// },
 
 		mounted(){
 			let date = new Date();
@@ -160,7 +166,10 @@
 			let w4finishAmount = [];
 
 			
-			week1btn.addEventListener('click', function(){
+			week1btn.addEventListener('click', ()=>{
+				this.total = w1finishAmount.reduce((a,b)=>{
+					return a+b;
+				});
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -176,7 +185,10 @@
 			});
 
 
-			week2btn.addEventListener('click', function(){
+			week2btn.addEventListener('click', ()=>{
+				this.total = w2finishAmount.reduce((a,b)=>{
+					return a+b;
+				});
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -191,7 +203,12 @@
 				});
 			});
 
-			week3btn.addEventListener('click', function(){
+			week3btn.addEventListener('click', ()=>{
+				this.total = w3finishAmount.reduce((a,b)=>{
+					return a+b;
+				});
+				// document.querySelector('p').innerHTML = this.total;
+				// console.log(this.total)
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {
@@ -207,7 +224,10 @@
 				
 			});
 
-			week4btn.addEventListener('click', function(){	
+			week4btn.addEventListener('click', ()=>{
+			this.total = w4finishAmount.reduce((a,b)=>{
+					return a+b;
+				});	
 				let theChart = new Chart(mychart, {
 					type: 'line',
 					data: {

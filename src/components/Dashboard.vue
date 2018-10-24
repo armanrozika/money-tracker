@@ -27,6 +27,7 @@
 			<div class="item-added">
 				<div class="item-green">item added</div>
 				<p id="quote">{{quote}}</p>
+				<p>- {{author}}</p>
 				<button @click="closeQuote" class="close-quote">&times;</button>
 			</div>
 		</div>
@@ -63,6 +64,7 @@
 				amount: '',
 				item: '',
 				quote: '',
+				author:'',
 				//automatically get day, week, month and year
 				day: dayName[date.getDay()],
 				week: calcWeek(date.getDate()),
@@ -104,6 +106,7 @@
 
 			blur(){
 				this.quote = ''
+				this.author = ''
 				let allDoc = document.querySelector('.blur');
 				let quoteContainer = document.querySelector('.item-added-container');
 				let quote = document.querySelector('.item-added');
@@ -127,6 +130,7 @@
 				.then(data => {
 					//console.log(data) output = array containing 1 quote, hence data[0], it's fuckin array !
 					this.quote = data[0].quote;
+					this.author = data[0].author;
 				})
 			},
 
